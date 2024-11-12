@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArchVision</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+        .gallery-slider .swiper-slide img {
+            display: block;
+            width: 50%;
+            height: 50%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+        .gallery-slider .swiper-pagination-bullet {
+            position: relative;
+            bottom: -0.313rem;
+            text-align: left;
+            border-radius: 0;
+            width: 1.125rem;
+            height: 0.25rem;
+            background: #fff;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="swiper-container gallery-slider">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="s1.jpg" alt="Vision to life">
+            </div>
+            <div class="swiper-slide">
+                <img src="s2.jpg" alt="Vision to life">
+            </div>
+            <div class="swiper-slide">
+                <img src="s3.jpg" alt="Vision to life">
+            </div>
+            <div class="swiper-slide">
+                <img src="s4.jpg" alt="Vision to life">
+            </div>
+            <div class="swiper-slide">
+                <img src="s5.jpg" alt="Vision to life">
+            </div>
+            <div class="swiper-slide">
+                <img src="s6.jpg" alt="Vision to life">
+            </div>
+            <div class="swiper-slide">
+                <img src="s7.jpg" alt="Vision to life">
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var slider = new Swiper(".gallery-slider", {
+            slidesPerView: 1,
+            loop: true,
+            loopedSlides: 7,
+            noSwiping: true,
+            keyboard: {
+                enabled: true
+            },
+            mousewheel: {
+                thresholdDelta: 70
+            },
+            noSwipingClass: "swiper-slide",
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true
+            }
+        });
+    </script>
+</body>
+</html>
