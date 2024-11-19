@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500&display=swap" rel="stylesheet">
+  <style>
+    /* Body and Layout Styles */
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #000; /* Default to black background (dark mode) */
+      color: #fff; /* White text for dark mode */
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* Navigation Bar Styles */
+    nav {
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 36px;
+      font-weight: 500;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .navbar-brand {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .mode-toggle {
+      cursor: pointer;
+      padding: 0.5em 1em;
+      border: none;
+      border-radius: 5px;
+      background-color: #080809;
+      color: white;
+      transition: background-color 0.3s;
+    }
+
+    .mode-toggle:hover {
+      background-color: #0056b3;
+    }
+
+    nav svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    nav .svg-container {
+      width: 20px;
+      height: 20px;
+    }
+
+    nav > div {
+      display: inline-flex;
+      align-items: center;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    nav > div:first-child {
+      gap: 10px;
+    }
+
+    nav > div:last-child {
+      gap: 24px;
+    }
+
+    nav > div:last-child > .active {
+      position: relative;
+    }
+
+    nav > div:last-child > .active:after {
+      bottom: -8px;
+      left: 0;
+      right: 0;
+      position: absolute;
+      content: "";
+      height: 3px;
+      border-radius: 99px;
+      background-color: #ecad29;
+    }
+
+    /* Light mode styles for navbar text */
+    .light-mode nav {
+      background-color: #fff;
+      color: black;
+    }
+
+    .light-mode nav a {
+      color: black;
+    }
+
+    .light-mode .navbar-brand {
+      color: black;
+    }
+
+    /* Light mode styles */
+    .light-mode {
+      background-color: #fff;
+      color: #000;
+    }
+
+    .light-mode footer {
+      background-color: #f1f1f1;
+      color: black;
+    }
+
+    .indicator {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 5px;
+      z-index: 60;
+      background-color: #ecad29;
+    }
+
+    .pagination {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      display: inline-flex;
+    }
+
+    .pagination > .arrow {
+      z-index: 60;
+      width: 50px;
+      height: 50px;
+      border-radius: 999px;
+      border: 2px solid #ffffff55;
+      display: grid;
+      place-items: center;
+    }
+
+    .pagination > .arrow:nth-child(2) {
+      margin-left: 20px;
+    }
+
+    .pagination > .arrow svg {
+      width: 24px;
+      height: 24px;
+      stroke-width: 2;
+      color: #ffffff99;
+    }
+
+    .pagination .progress-sub-container {
+      margin-left: 24px;
+      z-index: 60;
+      width: 500px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+    }
+
+    .pagination .progress-sub-background {
+      width: 500px;
+      height: 3px;
+      background-color: #ffffff33;
+    }
+
+    .pagination .progress-sub-foreground {
+      height: 3px;
+      background-color: #ecad29;
+    }
+
+    .pagination .slide-numbers {
+      width: 50px;
+      height: 50px;
+      overflow: hidden;
+      z-index: 60;
+      position: relative;
+    }
+
+    .pagination .slide-numbers .item {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      color: white;
+      top: 0;
+      left: 0;
+      display: grid;
+      place-items: center;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .cover {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #fff;
+      z-index: 100;
+    }
+
+    /* Contact Us Header */
+    .contact-header {
+      background-color: #000;
+      padding: 40px 0;
+      color: #fff;
+      text-align: center;
+    }
+
+    /* Content Section Styles */
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 300px; /* Two columns: one for form and one for swiper */
+      grid-gap: 20px;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      flex-grow: 1;
+    }
+
+    .contact-form, .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group input, .form-group textarea {
+      padding: 10px;
+      border: none;
+      background-color: #333;
+      color: white;
+      border-radius: 3px;
+      font-size: 16px;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .submit-button {
+      background-color: #3f3f3f;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      align-self: flex-end;
+    }
+
+    .submit-button:hover {
+      background-color: #333;
+    }
+    
+    footer {
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      background-color: #222;
+    }
+
+    /* Card Swiper Styles */
+    .swiper-container {
+        position:relative;
+        width: 100%; /* Full width of the column */
+        height: 200px; /* Fixed height for rectangle shape */
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .swiper-wrapper {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+
+    .swiper-slide {
+        min-width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: right;
+        display: flex;
+        flex-direction: column;
+        justify-content: right;
+        align-items: right;
+        color: white;
+        text-align: center;
+        font-size: 18px; /* Adjusted font size for better fit */
+    }
+
+    .swiper-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .prev {
+        left: 10px;
+    }
+
+    .next {
+        right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="indicator"></div>
+
+  <nav>
+    <div>
+      <div class="svg-container">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9s2.015-9 4.5-9" />
+        </svg>
+      </div>
+      <span class="navbar-brand">My Site</span>
+    </div>
+    <div>
+      <a href="#">Home</a>
+      <a href="#">Services</a>
+      <a href="#">About</a>
+      <a href="#" class="active">Contact</a>
+    </div>
+    <button class="mode-toggle">🌙</button>
+  </nav>
+
+  <div class="contact-header">
+    <h1>Contact Us</h1>
+    <p>We would love to hear from you!</p>
+  </div>
+
+  <div class="container">
+    <!-- Contact Form -->
+    <form action="#" class="contact-form">
+      <div class="form-group">
+        <input type="text" placeholder="Your Name" required>
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Your Email" required>
+      </div>
+      <div class="form-group">
+        <textarea placeholder="Your Message" required></textarea>
+      </div>
+      <button type="submit" class="submit-button">Send Message</button>
+    </form>
+
+    <!-- Card Swiper -->
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url('https://via.placeholder.com/600x400');">
+          <div class="slide-content">
+            <h3>Swiper Card 1</h3>
+            <p>Card Description</p>
+          </div>
+        </div>
+        <div class="swiper-slide" style="background-image: url('https://via.placeholder.com/600x400');">
+          <div class="slide-content">
+            <h3>Swiper Card 2</h3>
+            <p>Card Description</p>
+          </div>
+        </div>
+        <div class="swiper-slide" style="background-image: url('https://via.placeholder.com/600x400');">
+          <div class="slide-content">
+            <h3>Swiper Card 3</h3>
+            <p>Card Description</p>
+          </div>
+        </div>
+      </div>
+      <button class="swiper-button prev">❮</button>
+      <button class="swiper-button next">❯</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 My Site</p>
+  </footer>
+
+</body>
+</html>
