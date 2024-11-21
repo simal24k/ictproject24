@@ -15,6 +15,42 @@
     @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500&display=swap");
 
 /* Body and Layout Styles */
+body.light-mode  {
+  background-color: #ffffff; /* Set background to white for light mode */
+  color: #000000; /* Default text color to black */
+}
+
+body.light-mode h1 {
+  color: #000000; /* Set title "Archvision" to black */
+}
+body.light-mode h5 {
+  color: #000000; 
+}
+
+body.light-mode nav {
+  background-color: #ffffff; /* Set navbar to white */
+  color: #000000; /* Set navbar text to black */
+}
+
+body.light-mode nav > div {
+  color: #000000; /* Navbar items text color */
+}
+
+body.light-mode .mode-toggle {
+  background-color: #f0f0f0; /* Adjust toggle button background for light mode */
+  color: #000000; /* Adjust toggle button text color for light mode */
+}
+
+body.light-mode footer {
+  background-color: #f5f5f5; /* Set footer background to a light grey for better contrast */
+  color: #000000; /* Set footer text to black */
+}
+
+/* Add transitions for smooth mode change */
+body, nav, h1, footer, .mode-toggle {
+  transition: background-color 0.3s, color 0.3s;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -202,30 +238,18 @@ margin-left: 10px;
 
     h1 {
       color:  rgb(252, 246, 246); /* Dark blue for header */
-      font-size: 100px;
-      font-family: Broadway, sans-serif;
+      font-size: 70px;
+      font-family: "Inter", sans-serif;
       text-align: center;
       margin-top: 50px;
     }
-    .dark-mode .h1{
+    body.dark-mode h1{
       color:#fff;
     }
-    .light-mode .h1{
+    body.light-mode h1{
       color: #000;
     }
 
-    h5 {
-      color:  rgb(249, 249, 249); /* Dark blue for subtitle */
-      font-size: 20px;
-      font-family: Broadway, sans-serif;
-      text-align: center;
-    }
-    .dark-mode .h5{
-      color:#fff;
-    }
-    .light-mode .h5{
-      color: #000;
-    }
 
     footer {
       padding: 10px;
@@ -372,8 +396,7 @@ margin-left: 10px;
       </nav>
   </header>
 
-  <h1>ArchVision</h1>
-  <h5>by Theo James</h5>
+  <h1 id="title">Projects</h1>
 
   <section id="services">
     <h2 id="projects-heading" style="text-align: center; color: #003366; font-size: 36px; font-family: Broadway, sans-serif; margin-top: 50px;">
@@ -443,79 +466,43 @@ margin-left: 10px;
 
  
   <script>
-    // Initially hide the projects and subheading section
-    document.getElementById('projects').style.display = 'none';
-    document.getElementById('projects-subheading').style.display = 'none';
+   document.addEventListener('DOMContentLoaded', () => {
+    const modeToggle = document.getElementById('mode-toggle'); // The button
+    const body = document.body; // The body element
 
-    document.getElementById('Home-link').addEventListener('click', function() {
-      document.getElementById('projects').style.display = 'none'; // Hide projects
-      document.getElementById('projects-subheading').style.display = 'none'; // Hide subheading
+    // Check local storage for saved mode
+    const savedMode = localStorage.getItem('mode');
+
+    // Apply the saved mode or default to dark mode
+    if (savedMode === 'light') {
+        body.classList.add('light-mode'); // Add light mode class
+        body.classList.remove('dark-mode'); // Ensure dark mode is removed
+        modeToggle.textContent = 'Switch to Dark Mode';
+    } else {
+        // Default to dark mode if no saved preference
+        body.classList.add('dark-mode'); // Add dark mode class
+        body.classList.remove('light-mode'); // Ensure light mode is removed
+        modeToggle.textContent = 'Switch to Light Mode';
+    }
+
+    // Add event listener for the toggle button
+    modeToggle.addEventListener('click', () => {
+        if (body.classList.contains('dark-mode')) {
+            body.classList.remove('dark-mode'); // Remove dark mode
+            body.classList.add('light-mode');  // Add light mode
+            modeToggle.textContent = 'Switch to Dark Mode'; // Update button text
+            localStorage.setItem('mode', 'light'); // Save light mode to local storage
+        } else {
+            body.classList.remove('light-mode'); // Remove light mode
+            body.classList.add('dark-mode');  // Add dark mode
+            modeToggle.textContent = 'Switch to Light Mode'; // Update button text
+            localStorage.setItem('mode', 'dark'); // Save dark mode to local storage
+        }
     });
+});
 
-    // Show projects and subheading when the "Services" tab is clicked
-    document.getElementById('services-link').addEventListener('click', function() {
-      document.getElementById('projects').style.display = 'grid'; // Show projects
-      document.getElementById('projects-subheading').style.display = 'block'; // Show subheading
-    });
+</script>
 
-    document.getElementById('about-link').addEventListener('click', function() {
-      document.getElementById('projects').style.display = 'none'; // Hide projects
-      document.getElementById('projects-subheading').style.display = 'none'; // Hide subheading
-    });
-
-    document.getElementById('contact-link').addEventListener('click', function() {
-      document.getElementById('projects').style.display = 'none'; // Hide projects
-      document.getElementById('projects-subheading').style.display = 'none'; // Hide subheading
-    });
-               // Check local storage for saved mode
-               const savedMode = localStorage.getItem('mode');
-            if (savedMode === 'dark') {
-                body.classList.add('dark-mode');
-                modeToggle.textContent = 'Switch to Light Mode';
-            }
-
-            modeToggle.addEventListener('click', () => {
-                body.classList.toggle('dark-mode');
-
-                // Update button text based on the current mode
-                if (body.classList.contains('dark-mode')) {
-                    modeToggle.textContent = 'Switch to Light Mode';
-                    localStorage.setItem('mode', 'dark'); // Save mode to local storage
-                } else {
-                    modeToggle.textContent = 'Switch to Dark Mode';
-                    localStorage.setItem('mode', 'light'); // Save mode to local storage
-                }
-            });
-        });
-        // Dark Mode Toggle Script
-        document.addEventListener('DOMContentLoaded', () => {
-            const modeToggle = document.getElementById('mode-toggle');
-            const body = document.body;
-
-            // Check local storage for saved mode
-            const savedMode = localStorage.getItem('mode');
-            if (savedMode === 'light') {
-                body.classList.add('light-mode');
-                modeToggle.textContent = 'Switch to Dark Mode';
-            } else {
-                body.classList.remove('light-mode');
-                modeToggle.textContent = 'Switch to Light Mode';
-            }
-
-            modeToggle.addEventListener('click', () => {
-                body.classList.toggle('light-mode');
-                // Update button text based on the current mode
-                if (body.classList.contains('light-mode')) {
-                    modeToggle.textContent = 'Switch to Dark Mode';
-                    localStorage.setItem('mode', 'light');
-                } else {
-                    modeToggle.textContent = 'Switch to Light Mode';
-                    localStorage.setItem('mode', 'dark');
-                }
-            });
-        });
-
-  </script>
 
 </body>
 </html>
